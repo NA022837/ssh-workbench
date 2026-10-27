@@ -1,0 +1,24 @@
+BUILD A WINDOWS EXE FROM YOUR MAC
+
+This package is build-ready source, not an executable. Compilation must run on a Windows host. The included manual GitHub Actions workflow uses a Windows x64 runner and produces a single SSH Workbench.exe with Python bundled.
+
+1. Extract this ZIP into a new folder, for example ssh-workbench-windows-build. Its contents (app.py, file_actions.py, requirements.txt, build_windows.py and .github) belong at the root of a GitHub repository approved for this project.
+2. Create an empty private GitHub repository. From Terminal inside the extracted folder run the commands below, replacing YOUR_ORG/YOUR_REPO with its actual path:
+
+   git init
+   git branch -M main
+   git add .
+   git commit -m "Add SSH Workbench Windows build"
+   git remote add origin https://github.com/YOUR_ORG/YOUR_REPO.git
+   git push -u origin main
+
+   Authenticate with your normal GitHub mechanism. Do not add passwords, SSH private keys, connection profiles or build environments to the repository. No credentials are needed by the build itself.
+3. Open the repository in GitHub. Under Actions select Build Windows executable, then Run workflow. Choose onefile and start it. The workflow must be on the default branch.
+4. Open the successful run and download the SSH-Workbench-Windows-x64 artifact from its Artifacts section. Extract it, then extract SSH-Workbench-Windows-x64-onefile.zip inside it.
+5. Copy SSH Workbench.exe to a Windows x64 machine and run it. Python is not required there. Validate SSH connection, file browsing and the new right-click features before sharing further.
+
+The generated ZIP also has a SHA-256 checksum. Artifacts are retained for seven days. The workflow does not create a public release or deploy anything. The executable is unsigned. No Windows executable has been built or tested in this session.
+
+If the single-file version has a startup issue, rerun the workflow with onedir; distribute its entire output folder.
+
+For a Windows build machine instead of GitHub, install 64-bit Python 3.12 and double-click build_windows.cmd.
