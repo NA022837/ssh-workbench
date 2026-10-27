@@ -1,0 +1,35 @@
+name: Build Windows executable
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  windows-build:
+    runs-on: windows-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Download source
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+          architecture: x64
+
+      - name: Build Windows executable
+        run: python build_windows.py --mode onefile
+
+      - name: Upload Windows package
+        uses: actions/upload-artifact@v7
+        with:
+          name: SSH-Workbench-Windows-x64
+          path: |
+            release/*.zip
+            release/*.sha256
+          if-no-files-found: error
+          retention-days: 7
